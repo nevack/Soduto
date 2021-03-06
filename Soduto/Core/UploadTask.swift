@@ -94,7 +94,7 @@ public class UploadTask: NSObject, GCDAsyncSocketDelegate {
             return nil
         }
         
-        RunLoop.current.add(self.listenTimeoutTimer, forMode: .commonModes)
+        RunLoop.current.add(self.listenTimeoutTimer, forMode: RunLoop.Mode.common)
     }
     
     deinit {
@@ -128,14 +128,14 @@ public class UploadTask: NSObject, GCDAsyncSocketDelegate {
         self.portsManagementLock.lock()
         defer { self.portsManagementLock.unlock() }
         
-        return self.usedPorts.index(of: port) != nil
+        return self.usedPorts.firstIndex(of: port) != nil
     }
     
     public static func usePort(_ port: UInt16) {
         self.portsManagementLock.lock()
         defer { self.portsManagementLock.unlock() }
         
-        assert(self.usedPorts.index(of: port) == nil)
+        assert(self.usedPorts.firstIndex(of: port) == nil)
         self.usedPorts.append(port)
     }
     
@@ -143,7 +143,7 @@ public class UploadTask: NSObject, GCDAsyncSocketDelegate {
         self.portsManagementLock.lock()
         defer { self.portsManagementLock.unlock() }
         
-        if let index = self.usedPorts.index(of: port) {
+        if let index = self.usedPorts.firstIndex(of: port) {
             self.usedPorts.remove(at: index)
             DispatchQueue.main.async {
                 NotificationCenter.default.post(name: portReleaseNotification, object: port as AnyObject)

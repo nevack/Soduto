@@ -14,11 +14,11 @@ echo "***** using $OPENSSL_SRC for openssl source code  *****"
 
 # check whether libcrypto.a already exists - we'll only build if it does not
 if [ -f  "$TARGET_BUILD_DIR/libcrypto.a" ]; then
-    echo "***** Using previously-built libary $TARGET_BUILD_DIR/libcrypto.a - skipping build *****"
+    echo "***** Using previously-built library $TARGET_BUILD_DIR/libcrypto.a - skipping build *****"
     echo "***** To force a rebuild clean project and clean dependencies *****"
     exit 0;
 else
-    echo "***** No previously-built libary present at $TARGET_BUILD_DIR/libcrypto.a - performing build *****"
+    echo "***** No previously-built library present at $TARGET_BUILD_DIR/libcrypto.a - performing build *****"
 fi
 
 # figure out the right set of build architectures for this run

@@ -14,7 +14,7 @@ protocol BrowserWindowControllerDelegate: class {
     func browserWindowWillClose(_ controller: BrowserWindowController)
 }
 
-class BrowserWindowController: NSWindowController {
+class BrowserWindowController: NSWindowController, NSMenuItemValidation, NSToolbarItemValidation {
     
     // MARK: Types
     
@@ -82,7 +82,7 @@ class BrowserWindowController: NSWindowController {
     private var fileOperationsQueue: OperationQueue = OperationQueue()
     private var isLoadingContents: Bool = false
     
-    override var windowNibName: NSNib.Name! { return NSNib.Name(rawValue: "BrowserWindow") }
+    override var windowNibName: NSNib.Name! { return "BrowserWindow" }
     
     fileprivate static let dropTypes: [NSPasteboard.PasteboardType] = [ NSPasteboard.PasteboardType(rawValue: kUTTypeURL as String) ]
     private static var userDefaults: UserDefaults = {
@@ -121,10 +121,10 @@ class BrowserWindowController: NSWindowController {
         
         self.window?.delegate = self
         let autosaveNameID = self.fileSystem.name.addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? ""
-        self.window?.setFrameAutosaveName(NSWindow.FrameAutosaveName(rawValue: "com.soduto.SodutoBrowser.window-\(autosaveNameID)"))
+        self.window?.setFrameAutosaveName("com.soduto.SodutoBrowser.window-\(autosaveNameID)")
         self.window?.makeKey()
         
-        let iconItemNib = NSNib(nibNamed: NSNib.Name(rawValue: "IconItem"), bundle: nil)
+        let iconItemNib = NSNib(nibNamed: "IconItem", bundle: nil)
         self.collectionView.register(iconItemNib, forItemWithIdentifier: NSUserInterfaceItemIdentifier(rawValue: "IconItem"))
         self.collectionView.setDraggingSourceOperationMask(.copy, forLocal: false)
         self.collectionView.registerForDraggedTypes(type(of: self).dropTypes)
@@ -223,7 +223,7 @@ class BrowserWindowController: NSWindowController {
         var url = self.fileSystem.rootUrl
         
         let rootCell = NSPathComponentCell()
-        rootCell.image = NSImage(named: NSImage.Name.network)
+        rootCell.image = NSImage(named: NSImage.networkName)
         rootCell.title = self.fileSystem.name
         rootCell.url = url
         cells.append(rootCell)
@@ -233,7 +233,7 @@ class BrowserWindowController: NSWindowController {
             guard component != "/" else { continue }
             url.appendPathComponent(component, isDirectory: true)
             let cell = NSPathComponentCell()
-            cell.image = NSImage(named: NSImage.Name.folder)
+            cell.image = NSImage(named: NSImage.folderName)
             cell.title = component
             cell.url = url
             cells.append(cell)
@@ -241,7 +241,7 @@ class BrowserWindowController: NSWindowController {
         
         if self.collectionView.selectionIndexPaths.count == 1, let fileItem = self.fileItem(at: self.collectionView.selectionIndexPaths.first!), fileItem.isDirectory {
             let cell = NSPathComponentCell()
-            cell.image = NSImage(named: NSImage.Name.folder)
+            cell.image = NSImage(named: NSImage.folderName)
             cell.title = fileItem.name
             cell.url = fileItem.url
             cells.append(cell)
@@ -312,11 +312,11 @@ class BrowserWindowController: NSWindowController {
     }
     
     fileprivate func fileItems(at indexPaths: Set<IndexPath>) -> [FileItem] {
-        return indexPaths.flatMap { return self.fileItem(at: $0) }
+        return indexPaths.compactMap { return self.fileItem(at: $0) }
     }
     
     fileprivate func indexPath(for url: URL) -> IndexPath? {
-        guard let index =  self.arrangedItems.index(where: { $0.url == url }) else { return nil }
+        guard let index =  self.arrangedItems.firstIndex(where: { $0.url == url }) else { return nil }
         return IndexPath(indexes: [0, index])
     }
     
@@ -517,7 +517,7 @@ class BrowserWindowController: NSWindowController {
             
             let succeeded = !fileOperation.isCancelled && fileOperation.error == nil
             if succeeded {
-                if let indexPath = self.indexPath(for: srcUrl), let index = self.items.index(where: { $0.url == srcUrl }) {
+                if let indexPath = self.indexPath(for: srcUrl), let index = self.items.firstIndex(where: { $0.url == srcUrl }) {
                     self.resetBusyUrl(srcUrl, reload: false)
                     let newFileItem = FileItem(url: destUrl)
                     self.items[index] = newFileItem
@@ -838,7 +838,7 @@ class BrowserWindowController: NSWindowController {
     }
     
     @IBAction func deleteSelectedFiles(_ sender: Any?) {
-        let fileItems: [FileItem] = self.collectionView.selectionIndexPaths.flatMap { fileItem(at: $0) }
+        let fileItems: [FileItem] = self.collectionView.selectionIndexPaths.compactMap { fileItem(at: $0) }
         deleteFiles(fileItems)
     }
     
@@ -893,7 +893,7 @@ class BrowserWindowController: NSWindowController {
     
     // MARK: Menu / Toolbar
     
-    override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         switch menuItem.tag {
         case AppDelegate.MenuItemTags.back: return self.canGoBack
         case AppDelegate.MenuItemTags.forward: return self.canGoForward
@@ -910,15 +910,15 @@ class BrowserWindowController: NSWindowController {
         default: break
         }
         
-        guard let action = menuItem.action else { return super.validateMenuItem(menuItem) }
+        guard let action = menuItem.action else { return false }
         switch action {
         case #selector(copy(_:)): return self.canWriteFileItems(at: self.collectionView.selectionIndexPaths, to: NSPasteboard.general)
         case #selector(paste(_:)): return self.canReadFileItems(from: NSPasteboard.general)
-        default: return super.validateMenuItem(menuItem)
+        default: return false
         }
     }
     
-    override func validateToolbarItem(_ item: NSToolbarItem) -> Bool {
+    func validateToolbarItem(_ item: NSToolbarItem) -> Bool {
         switch item.tag {
         case AppDelegate.ToolbarItemTags.backForward:
             guard let view = item.view as? NSSegmentedControl else { return false }
@@ -991,7 +991,7 @@ extension BrowserWindowController: NSCollectionViewDelegate {
         
         let operations = copyFiles(fileItems, to: dropURL)
         
-        return operations.flatMap { return $0.destination?.lastPathComponent }
+        return operations.compactMap { return $0.destination?.lastPathComponent }
     }
     
     
@@ -1001,7 +1001,7 @@ extension BrowserWindowController: NSCollectionViewDelegate {
     
     public func collectionView(_ collectionView: NSCollectionView, validateDrop draggingInfo: NSDraggingInfo, proposedIndexPath proposedDropIndexPath: AutoreleasingUnsafeMutablePointer<NSIndexPath>, dropOperation proposedDropOperation: UnsafeMutablePointer<NSCollectionView.DropOperation>) -> NSDragOperation {
         
-        let pasteboard = draggingInfo.draggingPasteboard()
+        let pasteboard = draggingInfo.draggingPasteboard
         
         // Basic check if there is interesting content
         guard pasteboard.availableType(from: type(of: self).dropTypes) != nil else { return [] }
@@ -1063,7 +1063,7 @@ extension BrowserWindowController: NSCollectionViewDelegate {
      */
     public func collectionView(_ collectionView: NSCollectionView, acceptDrop draggingInfo: NSDraggingInfo, indexPath: IndexPath, dropOperation: NSCollectionView.DropOperation) -> Bool {
         
-        let pasteboard = draggingInfo.draggingPasteboard()
+        let pasteboard = draggingInfo.draggingPasteboard
         
         // Basic check if there is interesting content
         guard pasteboard.availableType(from: type(of: self).dropTypes) != nil else { assertionFailure("Cant accept pasteboard items - no supported drop types"); return false }

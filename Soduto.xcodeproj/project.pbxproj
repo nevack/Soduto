@@ -119,6 +119,8 @@
 		84FA45ED1DDF525200EF3992 /* PingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA45EC1DDF525200EF3992 /* PingService.swift */; };
 		84FFDA2A1E1D8D370069AC9A /* SimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FFDA291E1D8D370069AC9A /* SimplePing.m */; };
 		8FC977F11D4778E9001ADF7E /* StatusBarMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC977F01D4778E9001ADF7E /* StatusBarMenuController.swift */; };
+		ED4CDD7C25F4048700F986AE /* CleanroomLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0281088B204AD92E000FCA5E /* CleanroomLogger.framework */; };
+		ED4CDD7D25F4048700F986AE /* CleanroomLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0281088B204AD92E000FCA5E /* CleanroomLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -328,6 +330,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				ED4CDD7D25F4048700F986AE /* CleanroomLogger.framework in Embed Frameworks */,
 				023BD5A4204AEE900045B5F9 /* CocoaAsyncSocket.framework in Embed Frameworks */,
 				023BD5A8204AEEAD0045B5F9 /* Reachability.framework in Embed Frameworks */,
 			);
@@ -474,6 +477,7 @@
 				023BD5AB204AEF560045B5F9 /* libcrypto.a in Frameworks */,
 				023BD5AC204AEF560045B5F9 /* libssl.a in Frameworks */,
 				023BD5A3204AEE900045B5F9 /* CocoaAsyncSocket.framework in Frameworks */,
+				ED4CDD7C25F4048700F986AE /* CleanroomLogger.framework in Frameworks */,
 				023BD5A7204AEEAD0045B5F9 /* Reachability.framework in Frameworks */,
 				843E17891E26B56A001D0444 /* ServiceManagement.framework in Frameworks */,
 			);
@@ -969,14 +973,14 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = Soduto;
 				TargetAttributes = {
 					8433015F1D2D8CB8008934BB = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = WW9LKQ5SH5;
+						DevelopmentTeam = RXH4D9SUXM;
 						DevelopmentTeamName = "Giedrius Stanevicius (Personal Team)";
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1250;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
@@ -986,7 +990,7 @@
 					};
 					8435AEF51E26DD27005CD719 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = WW9LKQ5SH5;
+						DevelopmentTeam = RXH4D9SUXM;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
@@ -996,8 +1000,8 @@
 					};
 					845BC7091E69F00E00DC9B81 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = WW9LKQ5SH5;
-						LastSwiftMigration = 0900;
+						DevelopmentTeam = RXH4D9SUXM;
+						LastSwiftMigration = 1250;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
@@ -1007,7 +1011,7 @@
 					};
 					847EF4C11DC9049D00360BBE = {
 						CreatedOnToolsVersion = 8.1;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1250;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 8433015F1D2D8CB8008934BB;
 					};
@@ -1015,10 +1019,9 @@
 			};
 			buildConfigurationList = 8433015B1D2D8CB8008934BB /* Build configuration list for PBXProject "Soduto" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
@@ -1444,6 +1447,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1453,6 +1457,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -1460,8 +1465,10 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1499,6 +1506,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1508,6 +1516,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -1515,8 +1524,10 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1551,7 +1562,8 @@
 				CODE_SIGN_ENTITLEMENTS = Soduto/Soduto.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = WW9LKQ5SH5;
+				DEVELOPMENT_TEAM = RXH4D9SUXM;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
@@ -1570,7 +1582,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Soduto/Soduto-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1583,7 +1595,8 @@
 				CODE_SIGN_ENTITLEMENTS = Soduto/Soduto.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = WW9LKQ5SH5;
+				DEVELOPMENT_TEAM = RXH4D9SUXM;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
@@ -1601,7 +1614,7 @@
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Soduto/OpenSSL/openssl/include";
 				SWIFT_OBJC_BRIDGING_HEADER = "Soduto/Soduto-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1612,7 +1625,8 @@
 				CODE_SIGN_ENTITLEMENTS = SodutoLauncher/SodutoLauncher.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = WW9LKQ5SH5;
+				DEVELOPMENT_TEAM = RXH4D9SUXM;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = SodutoLauncher/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.soduto.SodutoLauncher;
@@ -1628,7 +1642,8 @@
 				CODE_SIGN_ENTITLEMENTS = SodutoLauncher/SodutoLauncher.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = WW9LKQ5SH5;
+				DEVELOPMENT_TEAM = RXH4D9SUXM;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = SodutoLauncher/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.soduto.SodutoLauncher;
@@ -1644,7 +1659,8 @@
 				CODE_SIGN_ENTITLEMENTS = SodutoBrowser/SodutoBrowser.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = WW9LKQ5SH5;
+				DEVELOPMENT_TEAM = RXH4D9SUXM;
+				ENABLE_HARDENED_RUNTIME = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(TARGET_BUILD_DIR)/libssh2/include",
 					"$(TARGET_BUILD_DIR)/openssl/include",
@@ -1658,7 +1674,7 @@
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Soduto/OpenSSL/openssl/include";
 				SWIFT_OBJC_BRIDGING_HEADER = "SodutoBrowser/SodutoBrowser-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1669,7 +1685,8 @@
 				CODE_SIGN_ENTITLEMENTS = SodutoBrowser/SodutoBrowser.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = WW9LKQ5SH5;
+				DEVELOPMENT_TEAM = RXH4D9SUXM;
+				ENABLE_HARDENED_RUNTIME = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(TARGET_BUILD_DIR)/libssh2/include",
 					"$(TARGET_BUILD_DIR)/openssl/include",
@@ -1685,7 +1702,7 @@
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Soduto/OpenSSL/openssl/include";
 				SWIFT_OBJC_BRIDGING_HEADER = "SodutoBrowser/SodutoBrowser-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1700,7 +1717,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.soduto.SodutoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Soduto.app/Contents/MacOS/Soduto";
 			};
 			name = Debug;
@@ -1716,7 +1733,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.soduto.SodutoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Soduto.app/Contents/MacOS/Soduto";
 			};
 			name = Release;

@@ -151,7 +151,7 @@ public class ShareService: NSObject, Service, DownloadTaskDelegate, UserNotifica
     public func downloadTask(_ task: DownloadTask, finishedWithSuccess success: Bool) {
         Log.debug?.message("downloadTask(<\(task)> finishedWithSuccess:<\(success)>)")
         
-        guard let index = self.downloadInfos.index(where: { $0.task === task }) else { return }
+        guard let index = self.downloadInfos.firstIndex(where: { $0.task === task }) else { return }
         let info = self.downloadInfos.remove(at: index)
         
         do {
@@ -190,7 +190,7 @@ public class ShareService: NSObject, Service, DownloadTaskDelegate, UserNotifica
         guard self.validDevices.count > 0 else { return [] }
         
         let types: [String] = type(of: self).dragTypes.map { $0.rawValue }
-        let canRead: Bool = sender.draggingPasteboard().canReadItem(withDataConformingToTypes: types)
+        let canRead: Bool = sender.draggingPasteboard.canReadItem(withDataConformingToTypes: types)
         return canRead ? [.copy] : []
     }
     
@@ -202,7 +202,7 @@ public class ShareService: NSObject, Service, DownloadTaskDelegate, UserNotifica
         var textPackets: [DataPacket] = []
         
         let types = type(of: self).dragTypes
-        let items: [NSPasteboardItem] = sender.draggingPasteboard().pasteboardItems ?? []
+        let items: [NSPasteboardItem] = sender.draggingPasteboard.pasteboardItems ?? []
         for item in items {
             guard let type = item.availableType(from: types) else { continue }
             switch type.rawValue {
@@ -376,9 +376,9 @@ public class ShareService: NSObject, Service, DownloadTaskDelegate, UserNotifica
     }
     
     private func showDownloadFinishNotification(fileName: String?, downloadTask task: DownloadTask, succeeded: Bool, finalUrl: URL? = nil) {
-        assert((try? task.connection.identity?.getDeviceName()) != nil, "Download task expected to have assigned a connection with proper identity info")
+        assert((((try? task.connection.identity?.getDeviceName()) as String??)) != nil, "Download task expected to have assigned a connection with proper identity info")
         
-        let deviceName: String? = (try? task.connection.identity?.getDeviceName() ?? nil) ?? nil
+        let deviceName: String? = (((try? task.connection.identity?.getDeviceName() ?? nil) as String??)) ?? nil
         let title = succeeded ? "Finished downloading file" : "File download failed"
         let info: String
         if let fileName = finalUrl?.lastPathComponent ?? fileName {
@@ -452,7 +452,7 @@ public class ShareService: NSObject, Service, DownloadTaskDelegate, UserNotifica
             menu.addItem(item)
         }
         
-        let position = sender.draggingDestinationWindow()?.frame.origin ?? NSEvent.mouseLocation
+        let position = sender.draggingDestinationWindow?.frame.origin ?? NSEvent.mouseLocation
         return menu.popUp(positioning: nil, at: position, in: nil)
     }
     

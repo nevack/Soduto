@@ -44,7 +44,7 @@ class SendMessageWindowController: NSWindowController {
     
     
     static func loadController() -> SendMessageWindowController {
-        let controller = SendMessageWindowController(windowNibName: NSNib.Name(rawValue: "SendMessageWindow"))
+        let controller = SendMessageWindowController(windowNibName: "SendMessageWindow")
         
         // make sure window is loaded
         let _ = controller.window
@@ -76,11 +76,11 @@ class SendMessageWindowController: NSWindowController {
         }
     }
     
-    public override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+    public func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         return true
     }
     
-    public override func controlTextDidChange(_ notification: Notification) {
+    public func controlTextDidChange(_ notification: Notification) {
         guard let view = notification.object as? NSView else { return }
         
         // To input
@@ -350,7 +350,7 @@ final class ContactPhoneNumber: NSObject {
                 guard contact.phoneNumbers.count > 0 else { return }
                 guard let contactFullName = CNContactFormatter.string(from: contact, style: .fullName) else { return }
                 guard contactFullName == fullName else { return }
-                guard let phoneIndex = contact.phoneNumbers.index(where: { (number: CNLabeledValue) -> Bool in
+                guard let phoneIndex = contact.phoneNumbers.firstIndex(where: { (number: CNLabeledValue) -> Bool in
                     return number.value.stringValue == phoneNumber
                 }) else { return }
                 contactMatch = contact

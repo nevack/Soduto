@@ -113,7 +113,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, BrowserWindowControllerDeleg
     // MARK: BrowserWindowControllerDelegate
     
     func browserWindowWillClose(_ controller: BrowserWindowController) {
-        guard let index = self.browserWindowControllers.index(of: controller) else { return }
+        guard let index = self.browserWindowControllers.firstIndex(of: controller) else { return }
         self.browserWindowControllers.remove(at: index)
     }
     
@@ -157,7 +157,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, BrowserWindowControllerDeleg
     
     // MARK: Menu
     
-    override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         switch menuItem.tag {
         case MenuItemTags.about: return true
         case MenuItemTags.newWindow: return keyBrowserWindowController != nil

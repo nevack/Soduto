@@ -165,12 +165,12 @@ public class TelephonyService: Service, UserNotificationActionHandler {
         assert(try! dataPacket.getEvent() != nil, "Expected telephony event property")
         
         guard let deviceId = device.id.addingPercentEncoding(withAllowedCharacters: .alphanumerics) else { return nil }
-        guard let event = (try? dataPacket.getEvent() ?? nil) else { return nil }
+        guard let event = (((try? dataPacket.getEvent() ?? nil) as String??)) else { return nil }
         
         if event == DataPacket.TelephonyEvent.sms.rawValue {
             // For SMS notifications we want them to be uniqueue per contact 
             // TODO: or should it be unique per message?
-            let phoneNumber = (try? dataPacket.getPhoneNumber())??.addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? "unknownPhoneNumber"
+            let phoneNumber = (((try? dataPacket.getPhoneNumber()) as String??))??.addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? "unknownPhoneNumber"
             return "\(self.id).\(deviceId).sms.\(phoneNumber)"
         }
         else {
@@ -187,7 +187,7 @@ public class TelephonyService: Service, UserNotificationActionHandler {
             guard let notificationId = self.notificationId(for: dataPacket, from: device) else { return }
             let phoneNumber = try dataPacket.getPhoneNumber() ?? "unknown number"
             let contactName = try dataPacket.getContactName() ?? phoneNumber
-            let thumbnail = (try? dataPacket.getPhoneThumbnail() ?? nil) ?? nil
+            let thumbnail = (((try? dataPacket.getPhoneThumbnail() ?? nil) as NSImage??)) ?? nil
             
             let notification = NSUserNotification(actionHandlerClass: type(of: self))
             var userInfo = notification.userInfo
@@ -218,7 +218,7 @@ public class TelephonyService: Service, UserNotificationActionHandler {
             guard let notificationId = self.notificationId(for: dataPacket, from: device) else { return }
             let phoneNumber = try dataPacket.getPhoneNumber() ?? "unknown number"
             let contactName = try dataPacket.getContactName() ?? phoneNumber
-            let thumbnail = (try? dataPacket.getPhoneThumbnail() ?? nil) ?? nil
+            let thumbnail = (((try? dataPacket.getPhoneThumbnail() ?? nil) as NSImage??)) ?? nil
             
             let notification = NSUserNotification()
             notification.title = "Missed a call from \(contactName)"
@@ -259,7 +259,7 @@ public class TelephonyService: Service, UserNotificationActionHandler {
             let phoneNumber = try dataPacket.getPhoneNumber() ?? "unknown number"
             let contactName = try dataPacket.getContactName() ?? phoneNumber
             let messageBody = lastMessageBody + (try dataPacket.getMessageBody() ?? "")
-            let thumbnail = (try? dataPacket.getPhoneThumbnail() ?? nil) ?? nil
+            let thumbnail = (((try? dataPacket.getPhoneThumbnail() ?? nil) as NSImage??)) ?? nil
             
             let notification = NSUserNotification(actionHandlerClass: type(of: self))
             var userInfo = notification.userInfo

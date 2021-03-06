@@ -95,7 +95,7 @@ public class StatusBarMenuController: NSObject, NSWindowDelegate, NSMenuDelegate
         }
         
         // A workaround for items dragged from dock stack - in such case performDragOperation is not called
-        if !dragOperationPerformed && self.statusBarItem.button?.frame.contains(sender.draggingLocation()) == true {
+        if !dragOperationPerformed && self.statusBarItem.button?.frame.contains(sender.draggingLocation) == true {
             _ = performDragOperation(sender)
         }
     }

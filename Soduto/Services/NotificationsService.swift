@@ -138,7 +138,7 @@ public class NotificationsService: Service, UserNotificationActionHandler {
         assert(dataPacket.isNotificationPacket, "Expected notification data packet")
         
         guard let deviceId = device.id.addingPercentEncoding(withAllowedCharacters: .alphanumerics) else { return nil }
-        guard let packetId = (try? dataPacket.getId())??.addingPercentEncoding(withAllowedCharacters: .alphanumerics) else { return nil }
+        guard let packetId = (((try? dataPacket.getId()) as String??))??.addingPercentEncoding(withAllowedCharacters: .alphanumerics) else { return nil }
         
         return "\(self.id).\(deviceId).\(packetId)"
     }

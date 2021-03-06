@@ -107,7 +107,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, DeviceManagerDelegate {
     private func showWelcomeWindow() {
         guard self.config.knownDeviceConfigs().filter({ $0.isPaired }).isEmpty else { return }
         
-        let storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "WelcomeWindow"), bundle: nil)
+        let storyboard = NSStoryboard(name: "WelcomeWindow", bundle: nil)
         guard let controller = storyboard.instantiateInitialController() as? WelcomeWindowController else { assertionFailure("Could not load welcome window controller."); return }
         
         NSApp.activate(ignoringOtherApps: true)

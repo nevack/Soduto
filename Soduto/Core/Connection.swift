@@ -288,8 +288,8 @@ public class Connection: NSObject, GCDAsyncSocketDelegate, PairingHandlerDelegat
     public func socket(_ sock: GCDAsyncSocket, didWriteDataWithTag tag: Int) {
         Log.debug?.message("socket(<\(sock)> didWriteDataWithTag:<\(tag)>)")
         
-        assert(self.packetsSending.index(where: { Int($0.dataPacket.id) == tag }) != nil, "Data packet is not in the packetsSending list.")
-        guard let index = self.packetsSending.index(where: { Int($0.dataPacket.id) == tag }) else { return }
+        assert(self.packetsSending.firstIndex(where: { Int($0.dataPacket.id) == tag }) != nil, "Data packet is not in the packetsSending list.")
+        guard let index = self.packetsSending.firstIndex(where: { Int($0.dataPacket.id) == tag }) else { return }
         
         self.packetsSending[index].packetSent = true
         
@@ -352,8 +352,8 @@ public class Connection: NSObject, GCDAsyncSocketDelegate, PairingHandlerDelegat
     public func uploadTask(_ task: UploadTask, finishedWithSuccess payloadSent: Bool) {
         Log.debug?.message("uploadTask(<\(task)> finishedWithSuccess:<\(payloadSent)>)")
         
-        assert(self.packetsSending.index(where: { $0.uploadTask === task }) != nil, "Data packet is not in the packetsSending list.")
-        guard let index = self.packetsSending.index(where: { $0.uploadTask === task }) else { return }
+        assert(self.packetsSending.firstIndex(where: { $0.uploadTask === task }) != nil, "Data packet is not in the packetsSending list.")
+        guard let index = self.packetsSending.firstIndex(where: { $0.uploadTask === task }) else { return }
         
         self.packetsSending[index].payloadSent = true
         
@@ -573,7 +573,7 @@ public class Connection: NSObject, GCDAsyncSocketDelegate, PairingHandlerDelegat
     
     private func rememberHwAddress() {
         guard self.pairingStatus == .Paired else { return }
-        guard let deviceId = (try? self.identity?.getDeviceId()) ?? nil else { return }
+        guard let deviceId = (((try? self.identity?.getDeviceId()) as String??)) ?? nil else { return }
         guard let hwAddress = NetworkUtils.hwAddress(for: self.peerAddress) else { return }
         
         self.config.deviceConfig(for: deviceId).addHwAddress(hwAddress)
